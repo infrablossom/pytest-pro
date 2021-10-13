@@ -19,7 +19,7 @@ class TestAuthorizationClass:
             wait_until_clickable(browser, (By.XPATH, '//*[@type="checkbox"]')).click()
             wait_until_clickable(browser, (By.CLASS_NAME, 'button')).click()
             wait_for_url_to_be(browser, 'https://qastand.valhalla.pw/profile')
-            browser.get_cookie('session')
+            assert browser.get_cookie('session')
 
     @pytest.mark.parametrize('email, password', credentials,
                              ids=['empty email', 'empty password', 'invalid email', 'unregistered email'])
