@@ -8,4 +8,4 @@ class TestBlog:
         post_heading = wait_until_clickable(browser, (By.XPATH, '//*[@href="/blog/page/1/test-post/"]'))
         post_heading.click()
         text = wait_until_visible(browser, (By.XPATH, '//p[2]')).text
-        assert text == f'Hello world!', 'Текст не совпадает с заданным'
+        assert text == 'Hello world!', f'Текст не совпадает с заданным, неверный текст: {text}'
