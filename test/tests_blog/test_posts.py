@@ -1,6 +1,5 @@
 import pytest
 from selenium.webdriver.common.by import By
-from time import sleep
 
 from api.api_helpers import delete_all_posts
 from api.blog_api import BlogApi
