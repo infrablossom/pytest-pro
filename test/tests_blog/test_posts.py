@@ -1,5 +1,6 @@
 import pytest
 from selenium.webdriver.common.by import By
+from time import sleep
 
 from api.api_helpers import delete_all_posts
 from api.blog_api import BlogApi
@@ -39,7 +40,9 @@ class TestsBlogModify:
         browser.get(url + Links.blog)
         wait_until_clickable(browser, (By.ID, 'new')).click()
         title = faker.text(10)
+        text = faker.text(100)
         wait_until_clickable(browser, (By.ID, 'title')).send_keys(title)
+        wait_until_clickable(browser, (By.ID, 'text')).send_keys(text)
         wait_until_clickable(browser, (By.ID, 'tags')).send_keys(faker.text(5))
         wait_until_clickable(browser, (By.ID, 'submit')).click()
 

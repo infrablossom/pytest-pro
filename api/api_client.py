@@ -10,7 +10,6 @@ def check_response(func):
     """Декоратор, который проверяет статус ответа и конвертирует ответ в json"""
     def wrapper(self, url, **kwargs):
         response = func(self, url, **kwargs)
-        print(response.json())
         if response.status_code != HTTPStatus.OK:
             raise Exception('Unsuccessful response')
         try:
