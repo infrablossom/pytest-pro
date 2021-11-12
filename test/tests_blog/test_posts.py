@@ -22,6 +22,7 @@ def create_new_post(url, faker):
     return title, text
 
 
+@pytest.mark.usefixtures('delete_user_posts')
 class TestBlogOpen:
     def test_open_post(self, browser, url, create_new_post):
         title, text = create_new_post
@@ -29,7 +30,7 @@ class TestBlogOpen:
         wait_until_clickable(browser, (By.XPATH, f'//h1[text()="{title}"]')).click()
         post_text = wait_until_visible(browser, (By.CSS_SELECTOR, '.container p+p'))
 
-        assert post_text.text == "Hello world!", "Неверный приветственный текст"
+        assert post_text.text == text
 
 
 @pytest.mark.usefixtures('delete_user_posts')

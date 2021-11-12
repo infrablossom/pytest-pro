@@ -1,5 +1,4 @@
 import pytest
-from constants import *
 from api.api_client import Client
 
 

@@ -38,7 +38,7 @@ class Client:
     @check_response
     def post(self, url: str, body: Dict = None) -> Union[Dict, None]:
         """Метод для отправки POST запросов"""
-        return self._session.get(self._base_url + url, data=body)
+        return self._session.post(self._base_url + url, data=body)
 
     @check_response
     def get(self, url: str) -> Union[Dict, None]:
