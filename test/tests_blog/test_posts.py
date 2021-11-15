@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from api.api_helpers import delete_all_posts
 from api.blog_api import BlogApi
 from constants import Links
-from functions import wait_until_visible, wait_until_clickable, wait_until_not_present
+from functions import wait_until_visible, wait_until_clickable, element_is_present
 
 
 @pytest.fixture()
@@ -58,9 +58,9 @@ class TestsBlogModify:
         wait_until_clickable(browser, (By.ID, 'title')).send_keys(Keys.BACKSPACE)
         wait_until_clickable(browser, (By.ID, 'submit')).click()
         cut_title = title[:-1]
-        new_title = wait_until_clickable(browser, (By.XPATH, f'//h1[text()="{cut_title}"]')).text
 
-        assert not new_title == title
+        assert element_is_present(browser, (By.XPATH, f'//h1[text()="{cut_title}"]')) is True, 'Текст заголовка не ' \
+                                                                                               'поменялся на нужный'
 
     def test_delete_post(self, browser, url, create_new_post):
         title, text = create_new_post
@@ -72,9 +72,4 @@ class TestsBlogModify:
         assert 'Your post was successfully deleted' in wait_until_visible(browser, (
             By.ID, 'alert_div')).text, 'Не отобразилось сообщение об успехе'
 
-        wait_until_not_present(browser, (By.XPATH, f'//h1[text()="{title}"]'))
-
-
-
-
-
+        assert not element_is_present(browser, (By.XPATH, f'//h1[text()="{title}"]')), 'Пост не удалился'
