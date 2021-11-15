@@ -1,3 +1,6 @@
+from selenium.webdriver import Chrome, Opera, Safari
+
+
 NEGATIVE_LOGIN_CREDENTIALS = [
     ("", "!QAZ2wsx"),
     ("qa_test@test.ru", ""),
@@ -5,19 +8,18 @@ NEGATIVE_LOGIN_CREDENTIALS = [
     ("test@test.ru", "1QAZ2wsx")
 ]
 
-POSITIVE_LOGIN_CREDENTIALS = {"email": "qa_test@test.ru",
-                              "password": "!QAZ2wsx"}
+POSITIVE_LOGIN_CREDENTIALS = {"email": "api_user_13@test.ru",
+                              "password": "q13w13e13"}
+
+BROWSERS = {"opera": Opera,
+            "chrome": Chrome,
+            "safari": Safari}
 
 
 class Links:
-    base_url = "https://qastand.valhalla.pw/"
-    login = base_url + "login"
-    profile = base_url + "profile"
-    blog = base_url + "blog"
-    author_page = base_url + "blog/author/2/"
-
-
-SESSION_COOKIE = {'name': 'session',
-                  'value': '.eJwlzjsOwjAMANC7ZGawHX-SXqaKY0ewtnRC3J1KTG99n7KvI89n2d7HlY-yv6JsBaMOY1RaQNzqSp05QsSpazaXI'
-                           'FATqiOH1qnCbI3SQRHSAmG26k1o9NWhMknrWN37jU0IU45wme5GiyWBHLkj8mzc09y03JHrzOO_ofL9AVk6Le8.YVn0'
-                           'oA.WT_USo8F4bTkxwenEGx0DU0ZzwQ'}
+    base_url = {'prod': 'https://qastand.valhalla.pw/',
+                'stage': 'https://qastand-dev.valhalla.pw/'}
+    login = "login"
+    profile = "profile"
+    blog = "blog"
+    author_page = "blog/author/2/"

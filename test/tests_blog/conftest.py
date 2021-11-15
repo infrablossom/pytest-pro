@@ -1,9 +1,9 @@
 import pytest
-from constants import *
+from api.api_client import Client
 
 
 @pytest.fixture(autouse=True)
-def login(browser):
-    browser.get(Links.login)
-    browser.add_cookie(SESSION_COOKIE)
-    browser.maximize_window()
+def login(browser, url):
+    cookie = Client(url).auth()
+    browser.get(url)
+    browser.add_cookie({'name': 'session', 'value': cookie['session']})
