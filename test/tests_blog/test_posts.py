@@ -1,10 +1,11 @@
 import pytest
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 from api.api_helpers import delete_all_posts
 from api.blog_api import BlogApi
 from constants import Links
-from functions import wait_until_visible, wait_until_clickable
+from functions import wait_until_visible, wait_until_clickable, wait_until_not_present
 
 
 @pytest.fixture()
@@ -48,4 +49,32 @@ class TestsBlogModify:
         assert 'Blog posted successfully!' in wait_until_visible(browser, (
             By.ID, 'alert_div')).text, 'Не отобразилось сообщение об успехе'
         assert wait_until_visible(browser, (By.TAG_NAME, 'h1')).text == title, 'Пост не опубликовался'
+
+    def test_edit_post_title(self, browser, url, create_new_post):
+        title, text = create_new_post
+        browser.get(url + Links.blog)
+        wait_until_clickable(browser, (By.XPATH, f'//h1[text()="{title}"]')).click()
+        wait_until_clickable(browser, (By.ID, 'edit')).click()
+        wait_until_clickable(browser, (By.ID, 'title')).send_keys(Keys.BACKSPACE)
+        wait_until_clickable(browser, (By.ID, 'submit')).click()
+        cut_title = title[:-1]
+        new_title = wait_until_clickable(browser, (By.XPATH, f'//h1[text()="{cut_title}"]')).text
+
+        assert not new_title == title
+
+    def test_delete_post(self, browser, url, create_new_post):
+        title, text = create_new_post
+        browser.get(url + Links.blog)
+        wait_until_clickable(browser, (By.XPATH, f'//h1[text()="{title}"]')).click()
+        wait_until_clickable(browser, (By.ID, 'delete')).click()
+        wait_until_clickable(browser, (By.ID, 'confirmedDelete')).click()
+
+        assert 'Your post was successfully deleted' in wait_until_visible(browser, (
+            By.ID, 'alert_div')).text, 'Не отобразилось сообщение об успехе'
+
+        wait_until_not_present(browser, (By.XPATH, f'//h1[text()="{title}"]'))
+
+
+
+
 
