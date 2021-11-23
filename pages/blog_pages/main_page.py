@@ -41,7 +41,7 @@ class MainPage(BasePage):
         self.wait_until_clickable(self.DELETE_BUTTON).click()
 
     def press_confirm_to_delete(self):
-        self.wait_until_clickable(self.DELETE_BUTTON).click()
+        self.wait_until_clickable(self.CONFIRM_DELETE_BUTTON).click()
 
     def check_title_edited(self, title):
         cut_title = title[:-1]

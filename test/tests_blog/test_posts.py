@@ -3,7 +3,6 @@ import pytest
 from api.api_helpers import delete_all_posts
 from api.blog_api import BlogApi
 from constants import Links
-
 from pages.blog_pages.main_page import MainPage
 from pages.blog_pages.post_modify_page import PostModifyPage
 from pages.blog_pages.post_page import PostPage
@@ -24,6 +23,7 @@ def create_new_post(url, faker):
     return title, text
 
 
+@pytest.mark.usefixtures('login')
 @pytest.mark.usefixtures('delete_user_posts')
 class TestBlogOpen:
     @pytest.fixture(autouse=True)
@@ -39,6 +39,7 @@ class TestBlogOpen:
         self.post_page.check_post_text(text)
 
 
+@pytest.mark.usefixtures('login')
 @pytest.mark.usefixtures('delete_user_posts')
 class TestsBlogModify:
     @pytest.fixture(autouse=True)
