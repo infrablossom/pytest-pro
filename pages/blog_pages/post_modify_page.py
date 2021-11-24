@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+
 from pages.base_page import BasePage
 
 
@@ -13,8 +13,11 @@ class PostModifyPage(BasePage):
     def add_title(self, title):
         self.wait_until_clickable(self.TITLE_FIELD).send_keys(title)
 
-    def edit_title(self):
-        self.wait_until_clickable(self.TITLE_FIELD).send_keys(Keys.BACKSPACE)
+    def edit_title(self, title):
+        new_title = title[:-1]
+        self.wait_until_clickable(self.TITLE_FIELD).clear()
+        self.wait_until_clickable(self.TITLE_FIELD).send_keys(new_title)
+        return new_title
 
     def add_text(self, text):
         self.wait_until_clickable(self.TEXT_FIELD).send_keys(text)

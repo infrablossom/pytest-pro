@@ -9,9 +9,6 @@ class MainPage(BasePage):
     CREATE_POST_BUTTON = (By.ID, "new")
     SUCCESS_MESSAGE = (By.ID, "alert_div")
     FIRST_POST_TITLE = (By.TAG_NAME, "h1")
-    EDIT_BUTTON = (By.ID, 'edit')
-    DELETE_BUTTON = (By.ID, 'delete')
-    CONFIRM_DELETE_BUTTON = (By.ID, 'confirmedDelete')
 
     def click_on_post_title(self, title):
         self.wait_until_clickable((By.XPATH, self.POST_TITLE.format(title))).click()
@@ -43,11 +40,9 @@ class MainPage(BasePage):
     def press_confirm_to_delete(self):
         self.wait_until_clickable(self.CONFIRM_DELETE_BUTTON).click()
 
-    def check_title_edited(self, title):
-        cut_title = title[:-1]
-
-        assert self.element_is_present((By.XPATH, self.POST_TITLE.format(cut_title))) is True, 'Текст заголовка не ' \
-                                                                                               'поменялся на нужный'
+    def check_title_edited(self, edited_title):
+        assert self.element_is_present((By.XPATH, self.POST_TITLE.format(edited_title))) is True, 'Текст заголовка не ' \
+                                                                                                  'поменялся на нужный'
 
     def check_create_post_button_is_missing(self):
         self.wait_until_not_present(self.CREATE_POST_BUTTON)

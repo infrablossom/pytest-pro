@@ -2,10 +2,10 @@ from typing import Tuple
 
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver import Chrome
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebElement
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
 
 
 # класс с общими хэлперами и методами для работы с элементами, которые расположены на каждой странице
@@ -53,3 +53,10 @@ class BasePage:
 
     def logout(self):
         self.wait_until_clickable(self.LOGOUT_BUTTON).click()
+
+    def wait_for_expected_url(self, url: str, timeout: int = 5) -> bool:
+        try:
+            WebDriverWait(self.browser, timeout).until(ec.url_to_be(url))
+            return True
+        except TimeoutException:
+            return False

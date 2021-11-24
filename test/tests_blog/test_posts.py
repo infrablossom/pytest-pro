@@ -31,8 +31,8 @@ class TestBlogOpen:
         self.blog_page = MainPage(browser, url + Links.blog)
         self.post_page = PostPage(browser, url + Links.blog)
 
-    def test_open_post(self, create_post_for_test):
-        title, text = create_post_for_test
+    def test_open_post(self, create_new_post):
+        title, text = create_new_post
 
         self.blog_page.open_page()
         self.blog_page.click_on_post_title(title)
@@ -66,9 +66,9 @@ class TestsBlogModify:
         self.blog_page.open_page()
         self.blog_page.click_on_post_title(title)
         self.blog_page.click_edit_post_button()
-        self.post_modify_page.edit_title()
+        edited_title = self.post_modify_page.edit_title(title)
         self.post_modify_page.click_submit_button()
-        self.blog_page.check_title_edited(title)
+        self.blog_page.check_title_edited(edited_title)
 
     def test_delete_post(self, create_new_post):
         title, text = create_new_post

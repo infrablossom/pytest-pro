@@ -1,6 +1,7 @@
-from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
+
 from constants import Links
+from pages.base_page import BasePage
 
 
 # класс для работы со страницей авторизации (/login)
@@ -20,7 +21,4 @@ class AuthPage(BasePage):
         assert self.browser.get_cookie('session')
 
     def check_unsuccessful_auth(self, url):
-        self.wait_for_url_to_be(url + Links.login)
-
-
-
+        assert self.wait_for_expected_url(url + Links.login) is True, 'Авторизация не должна пройти успешно'
