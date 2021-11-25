@@ -45,6 +45,7 @@ class TestsBlogModify:
     @pytest.fixture(autouse=True)
     def setup(self, browser, url):
         self.blog_page = MainPage(browser, url + Links.blog)
+        self.post_page = PostPage(browser, url + Links.blog)
         self.post_modify_page = PostModifyPage(browser, url + Links.blog)
 
     def test_create_post(self, faker):
@@ -65,7 +66,7 @@ class TestsBlogModify:
         title, text = create_new_post
         self.blog_page.open_page()
         self.blog_page.click_on_post_title(title)
-        self.blog_page.click_edit_post_button()
+        self.post_page.click_edit_post_button()
         edited_title = self.post_modify_page.edit_title(title)
         self.post_modify_page.click_submit_button()
         self.blog_page.check_title_edited(edited_title)
@@ -74,7 +75,7 @@ class TestsBlogModify:
         title, text = create_new_post
         self.blog_page.open_page()
         self.blog_page.click_on_post_title(title)
-        self.blog_page.click_delete_post_button()
-        self.blog_page.press_confirm_to_delete()
+        self.post_page.click_delete_post_button()
+        self.post_page.press_confirm_to_delete()
         self.blog_page.check_post_deleted_successfully_message()
         self.blog_page.check_post_is_missing(title)

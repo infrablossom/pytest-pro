@@ -13,3 +13,12 @@ class PostPage(BasePage):
     def check_post_text(self, text):
         post_text = self.wait_until_visible(self.POST_TEXT)
         assert post_text.text == text, "Неверный текст"
+
+    def click_edit_post_button(self):
+        self.wait_until_clickable(self.EDIT_BUTTON).click()
+
+    def click_delete_post_button(self):
+        self.wait_until_clickable(self.DELETE_BUTTON).click()
+
+    def press_confirm_to_delete(self):
+        self.wait_until_clickable(self.CONFIRM_DELETE_BUTTON).click()
