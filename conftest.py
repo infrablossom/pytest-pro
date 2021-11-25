@@ -1,7 +1,7 @@
 import random
-
 import pytest
 
+from api.api_client import Client
 from constants import Links, BROWSERS
 
 
@@ -45,3 +45,10 @@ def pytest_addoption(parser):
 @pytest.fixture(scope='session', autouse=True)
 def faker_seed():
     return random.randint(0, 9999)
+
+
+@pytest.fixture()
+def login(browser, url):
+    cookie = Client(url).auth()
+    browser.get(url)
+    browser.add_cookie({'name': 'session', 'value': cookie['session']})
