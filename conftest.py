@@ -2,7 +2,7 @@ import random
 import pytest
 
 from api.api_client import Client
-from constants import Links, BROWSERS
+from constants import Links, BROWSERS, VALID_BROWSERS, BROWSER_REMOTE_CAPABILITIES, COMMAND_EXECUTOR
 
 
 def pytest_configure(config):
@@ -16,8 +16,12 @@ def pytest_configure(config):
 
 @pytest.fixture
 def browser(request):
-    my_browser = request.config.getoption('--browser')
-    browser = BROWSERS[my_browser]()
+    launch = request.config.getoption("--launch")
+    if launch == 'remote':
+        browser = VALID_BROWSERS[launch](command_executor=COMMAND_EXECUTOR,
+                                         desired_capabilities=BROWSER_REMOTE_CAPABILITIES)
+    else:
+        browser = VALID_BROWSERS[launch]()
     browser.maximize_window()
     yield browser
     browser.quit()
@@ -38,7 +42,7 @@ def pytest_addoption(parser):
         '--env', default='prod'
     )
     parser.addoption(
-        '--browser', default='chrome', choices=["chrome", "opera", "safari"]
+        '--browser', default='chrome', choices=["chrome", "opera", "safari", "remote"]
     )
 
 
