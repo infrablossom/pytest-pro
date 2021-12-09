@@ -1,4 +1,4 @@
-from selenium.webdriver import Chrome, Opera, Safari
+from selenium.webdriver import Chrome, Opera, Safari, Remote
 
 
 NEGATIVE_LOGIN_CREDENTIALS = [
@@ -14,6 +14,20 @@ POSITIVE_LOGIN_CREDENTIALS = {"email": "api_user_13@test.ru",
 BROWSERS = {"opera": Opera,
             "chrome": Chrome,
             "safari": Safari}
+
+VALID_BROWSERS = {
+   "chrome": Chrome,
+   "opera": Opera,
+   "remote": Remote
+}
+
+BROWSER_REMOTE_CAPABILITIES = {
+      "browserName": "chrome",
+      "version": "95.0",
+      "enableVNC": True,
+  }
+
+COMMAND_EXECUTOR = 'http://localhost:4444/wd/hub'
 
 
 class Links:
